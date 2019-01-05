@@ -54,8 +54,6 @@ CGFloat GIFontSize(void) {
   return size > 0 ? size : GIDefaultFontSize;
 }
 
-static const void* _associatedObjectCommitKey = &_associatedObjectCommitKey;
-
 @implementation NSMutableAttributedString (GIAppKit)
 
 - (void)appendString:(NSString*)string withAttributes:(NSDictionary*)attributes {
@@ -336,34 +334,6 @@ OVERRIDE_SETTER_AND_UPDATE_DEFAULTS(AutomaticTextReplacementEnabled, TextReplace
 @end
 
 @implementation GITableCellView
-
-- (void)saveTextFieldColors {
-  for (NSView* view in self.subviews) {
-    if ([view isKindOfClass:[NSTextField class]]) {
-      objc_setAssociatedObject(view, _associatedObjectCommitKey, [(NSTextField*)view textColor], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-  }
-}
-
-- (void)awakeFromNib {
-  [super awakeFromNib];
-
-  [self saveTextFieldColors];
-}
-
-- (void)setBackgroundStyle:(NSBackgroundStyle)backgroundStyle {
-  [super setBackgroundStyle:backgroundStyle];
-
-  for (NSView* view in self.subviews) {
-    if ([view isKindOfClass:[NSTextField class]]) {
-      if (backgroundStyle == NSBackgroundStyleEmphasized) {
-        [(NSTextField*)view setTextColor:[NSColor textBackgroundColor]];
-      } else {
-        [(NSTextField*)view setTextColor:objc_getAssociatedObject(view, _associatedObjectCommitKey)];
-      }
-    }
-  }
-}
 
 - (void)drawRect:(NSRect)dirtyRect {
   NSRect bounds = self.bounds;

@@ -77,7 +77,6 @@ FOUNDATION_EXPORT CGFloat GIFontSize(void);  // Reads GIUserDefaultKey_FontSize,
 
 @interface GITableCellView : NSTableCellView
 @property(nonatomic) NSInteger row;
-- (void)saveTextFieldColors;
 @end
 
 @interface GITableView : NSTableView
